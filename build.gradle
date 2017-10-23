@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        classpath 'com.pawmot:dockerize-spring-boot:0.2'
+    }
+}
+
+group 'com.pawmot'
+version '0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.pawmot.dockerize-spring-boot'
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repo.spring.io/milestone/' }
+}
+
+dependencyManagement {
+    dependencies {
+        dependency "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+        dependency "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+        dependency "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+    }
+}
+
+dependencies {
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
+    runtime 'org.jetbrains.kotlin:kotlin-reflect'
+
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-devtools'
+
+    compile 'ch.qos.logback:logback-classic'
+
+    compile 'io.reactivex.rxjava2:rxkotlin'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "4.2.1"
+}
+
+docker {
+    imageName "pawmot/spring5-samples"
+    tag project.version
+}
