@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 @Service
 class Clock {
 
-    val time: Observable<String> = Observable.interval(1, TimeUnit.SECONDS)
+    val time: Observable<String> = Observable.interval(0,1, TimeUnit.SECONDS)
             .map { _ -> LocalTime.now() }
             .map { it.format(DateTimeFormatter.ofPattern("HH:mm:ss")) }
             .share()

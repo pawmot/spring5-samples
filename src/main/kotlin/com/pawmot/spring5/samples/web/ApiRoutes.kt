@@ -6,7 +6,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.router
 
 @Configuration
-class ApiRoutes(val timeHandler: TimeHandler) {
+class ApiRoutes(val timeHandler: TimeHandler, val proxyHandler: ProxyHandler) {
 
     @Bean
     fun apiRouter() = router {
@@ -16,6 +16,9 @@ class ApiRoutes(val timeHandler: TimeHandler) {
             }
             ("/timeSse" and accept(MediaType.TEXT_EVENT_STREAM)).nest {
                 GET("/", timeHandler::sse)
+            }
+            ("/timeProxy").nest {
+                GET("/", proxyHandler::proxy)
             }
         }
     }
