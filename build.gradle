@@ -26,6 +26,7 @@ apply plugin: 'com.pawmot.dockerize-spring-boot'
 repositories {
     mavenCentral()
     maven { url 'http://repo.spring.io/milestone/' }
+    maven { url 'http://repo.spring.io/snapshot/' }
 }
 
 dependencyManagement {
@@ -41,6 +42,7 @@ dependencies {
     runtime 'org.jetbrains.kotlin:kotlin-reflect'
 
     compile 'org.springframework.boot:spring-boot-starter-webflux'
+    compile 'org.springframework.boot:spring-boot-starter-security-reactive'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.springframework.boot:spring-boot-devtools'
 
