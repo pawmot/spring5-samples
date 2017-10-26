@@ -3,10 +3,18 @@ server:
 
 management:
   port: 8081
+  health:
+    mongo:
+      enabled: true
 
 spring:
   main:
     web-application-type: reactive
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: spring5-samples
 
 endpoints:
   health:
